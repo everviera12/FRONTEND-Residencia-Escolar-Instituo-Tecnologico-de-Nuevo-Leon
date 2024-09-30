@@ -35,6 +35,33 @@ export const handleSubmit = async (e) => {
   }
 };
 
+// PUT (EDITAR)
+export const updateProduct = async (selectedProduct, data) => {
+  if (!selectedProduct) return;
+
+  try {
+    const response = await fetch(
+      `http://localhost:3000/productos/producto/${selectedProduct.id}`,
+      {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      }
+    );
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message);
+    }
+
+    return true; 
+  } catch (error) {
+    throw new Error("Error al actualizar el producto: " + error.message);
+  }
+};
+
 // DELETE
 export const handleDelete = async () => {
   if (!selectedProduct) return;
