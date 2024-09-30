@@ -25,3 +25,23 @@ body {
     text-wrap: balance;
   }
 }
+
+
+/* animacion del modal | START */
+#modal_animation {
+  animation-duration: 1s;
+  animation-name: slidein;
+  animation-timing-function: ease-in-out;
+  left: 0;
+  right: 0;
+}
+@keyframes slidein {
+  from {
+    top: -60%; 
+  }
+
+  to {
+    top: 0; 
+  }
+}
+/* animacion del modal | END */
