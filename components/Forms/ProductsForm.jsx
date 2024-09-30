@@ -2,7 +2,7 @@ export default function ProductsForm({ handleSubmit, setModal }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-50">
       <div className="bg-white shadow-lg rounded-lg p-8 space-y-6 max-w-lg w-full">
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-6 text-black">
           <div className="grid grid-cols-3 gap-4">
             <div>
               <label
