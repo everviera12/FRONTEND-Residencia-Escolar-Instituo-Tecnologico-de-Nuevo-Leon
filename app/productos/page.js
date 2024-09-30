@@ -3,11 +3,11 @@
 import { Grid } from "gridjs-react";
 import { _ } from "gridjs-react";
 import "gridjs/dist/theme/mermaid.css";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ProductsForm from "@/components/Forms/ProductsForm";
 import ActionsTable from "@/components/ActionsTable";
 import Loader from "@/components/Loader";
-import { handleSubmit, updateProduct } from "@/fetching/fetchProductos";
+import { handleSubmit, updateProduct } from "@/services/fetchProductos";
 
 export default function ProductosPage() {
   const [modal, setModal] = useState(false);
@@ -46,7 +46,7 @@ export default function ProductosPage() {
     if (!selectedProduct) return;
 
     const confirmDelete = window.confirm(
-      `¿Estás seguro de que quieres eliminar el producto ${selectedProduct.nombre}?`
+      `¿Estás seguro de que quieres eliminar el producto?`
     );
     if (!confirmDelete) return;
 

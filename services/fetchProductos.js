@@ -61,31 +61,3 @@ export const updateProduct = async (selectedProduct, data) => {
     throw new Error("Error al actualizar el producto: " + error.message);
   }
 };
-
-// DELETE
-export const handleDelete = async () => {
-  if (!selectedProduct) return;
-
-  const confirmDelete = window.confirm(
-    `¿Estás seguro de que quieres eliminar el producto ${selectedProduct.nombre}?`
-  );
-  if (!confirmDelete) return;
-
-  try {
-    const response = await fetch(
-      `http://localhost:3000/productos/producto/${selectedProduct.id}`,
-      {
-        method: "DELETE",
-      }
-    );
-    if (response.ok) {
-      alert("Producto eliminado con éxito");
-      window.location.reload();
-    } else {
-      const errorData = await response.json();
-      alert(`Error al eliminar el producto: ${errorData.message}`);
-    }
-  } catch (error) {
-    alert("Error al eliminar el producto: " + error.message);
-  }
-};
