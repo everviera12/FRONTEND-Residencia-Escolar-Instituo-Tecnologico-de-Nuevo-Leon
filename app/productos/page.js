@@ -3,16 +3,44 @@
 import { Grid } from "gridjs-react";
 import { _ } from "gridjs-react";
 import "gridjs/dist/theme/mermaid.css";
-import { handleSubmit } from "@/fetching/fetchProductos";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ProductsForm from "@/components/Forms/ProductsForm";
 import ActionsTable from "@/components/ActionsTable";
 import Loader from "@/components/Loader";
+import { handleSubmit, updateProduct } from "@/fetching/fetchProductos";
 
 export default function ProductosPage() {
   const [modal, setModal] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  const handleCreateOrUpdate = async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData(e.target);
+    const data = {
+      nombre: formData.get("nombre"),
+      precio: formData.get("precio"),
+      stock: formData.get("stock"),
+      descripcion: formData.get("descripcion"),
+    };
+
+    try {
+      if (selectedProduct) {
+        await updateProduct(selectedProduct, data);
+        alert("Producto actualizado exitosamente");
+      } else {
+        await handleSubmit(e);
+        alert("Producto guardado exitosamente");
+      }
+
+      setTimeout(() => {
+        window.location.reload();
+      }, 2000);
+    } catch (error) {
+      alert(error.message);
+    }
+  };
 
   const handleDelete = async () => {
     if (!selectedProduct) return;
@@ -46,12 +74,16 @@ export default function ProductosPage() {
       <h1 className="text-yellow-400 font-bold text-4xl">Tabla de Productos</h1>
 
       {modal && (
-        <ProductsForm handleSubmit={handleSubmit} setModal={setModal} />
+        <ProductsForm
+          handleSubmit={handleCreateOrUpdate}
+          setModal={setModal}
+          selectedProduct={selectedProduct}
+        />
       )}
 
       {loading && <Loader />}
 
-      <div>
+      <div className="container">
         <Grid
           server={{
             url: "http://localhost:3000/productos",
@@ -60,7 +92,7 @@ export default function ProductosPage() {
               if (res.status === 404) return await { data: [] };
               if (res.ok) return await res.json();
 
-              throw new Error("oh no :(");
+              throw new Error("errir al obtener los datos");
             },
             then: (data) =>
               data.map((producto) => [
