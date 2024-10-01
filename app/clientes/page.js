@@ -10,6 +10,7 @@ import { faCirclePlus } from "@fortawesome/free-solid-svg-icons";
 import ClientsForm from "@/components/Forms/ClientsForm";
 import { handleSubmitClients, updateClient } from "@/services/fetchClientes";
 import ActionsClients from "@/components/ActionsTable/ActionsClients";
+import { table_columns_clientes } from "@/utils/staticData";
 
 export default function ClientesPage() {
   const [modal, setModal] = useState(false);
@@ -69,11 +70,9 @@ export default function ClientesPage() {
   };
 
   return (
-    <div className="grid justify-center px-10 gap-5">
+    <div className="grid justify-center px-10">
       <div className="flex justify-between items-center">
-        <h1 className="text-yellow-400 font-bold text-4xl">
-          Tabla de Clientes
-        </h1>
+        <h1 className="text-yellow-400 font-bold text-4xl">Tabla de Clientes</h1>
         <button
           className="text-md bg-green-800 px-5 py-1.5 rounded-md text-white font-semibold hover:text-opacity-40 transition-all"
           onClick={() => {
@@ -121,7 +120,7 @@ export default function ClientesPage() {
                 ),
               ]),
           }}
-          columns={["Nombre", "Direccion", "Telefono", "Acciones"]}
+          columns={table_columns_clientes}
           search={true}
           sort={true}
           pagination={{

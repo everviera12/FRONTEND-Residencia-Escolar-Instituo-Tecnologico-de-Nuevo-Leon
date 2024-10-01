@@ -10,6 +10,7 @@ import Loader from "@/components/Loader";
 import { handleSubmitProduct, updateProduct } from "@/services/fetchProductos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faFile } from "@fortawesome/free-solid-svg-icons";
+import { table_columns_productos } from "@/utils/staticData";
 
 export default function ProductosPage() {
   const [modal, setModal] = useState(false);
@@ -69,7 +70,7 @@ export default function ProductosPage() {
   };
 
   return (
-    <div className="grid justify-center px-10 gap-5">
+    <div className="grid justify-center px-10">
       <div className="flex justify-between items-center">
         <h1 className="text-yellow-400 font-bold text-4xl">Tabla de Productos</h1>
         {/* Botón para AGREGAR producto */}
@@ -124,7 +125,7 @@ export default function ProductosPage() {
                 ),
               ]),
           }}
-          columns={["Nombre", "Descripción", "Precio", "Stock", "Acciones"]}
+          columns={table_columns_productos}
           search={true}
           sort={true}
           pagination={{
