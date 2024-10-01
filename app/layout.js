@@ -1,5 +1,6 @@
 import localFont from "next/font/local";
 import "../public/globals.css";
+import AsideMenu from "@/components/AsideMenu";
 
 const geistSans = localFont({
   src: "../public/fonts/GeistVF.woff",
@@ -22,8 +23,9 @@ export default function RootLayout({ children }) {
   return (
     <html lang="es">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased flex`}
       >
+        <AsideMenu />
         {children}
       </body>
     </html>

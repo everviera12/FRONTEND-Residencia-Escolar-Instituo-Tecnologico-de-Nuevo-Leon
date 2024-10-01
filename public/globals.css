@@ -26,6 +26,9 @@ body {
   }
 }
 
+#active {
+  color: #613bdc;
+}
 
 /* animacion del modal | START */
 #modal_animation {
