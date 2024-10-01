@@ -24,7 +24,7 @@ export default function ActionsProducts({
       <button
         className="text-xl rounded-md text-red-400 hover:text-opacity-40 transition-all"
         onClick={() => {
-          handleDelete(setSelectedProduct(producto));
+          handleDelete(producto.id);
         }}
       >
         <FontAwesomeIcon icon={faTrash} />

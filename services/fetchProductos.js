@@ -1,5 +1,5 @@
 // POST
-export const handleSubmit = async (e) => {
+export const handleSubmitProduct = async (e) => {
   e.preventDefault();
 
   const formData = new FormData(e.target);

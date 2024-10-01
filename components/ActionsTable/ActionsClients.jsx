@@ -24,7 +24,7 @@ export default function ActionsClients({
       <button
         className="text-xl rounded-md text-red-400 hover:text-opacity-40 transition-all"
         onClick={() => {
-          handleDelete(setSelectedClient(cliente));
+          handleDelete(cliente.id);
         }}
       >
         <FontAwesomeIcon icon={faTrash} />
