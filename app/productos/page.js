@@ -5,9 +5,11 @@ import { _ } from "gridjs-react";
 import "gridjs/dist/theme/mermaid.css";
 import { useState } from "react";
 import ProductsForm from "@/components/Forms/ProductsForm";
-import ActionsTable from "@/components/ActionsTable";
+import ActionsProducts from "@/components/ActionsTable/ActionsProducts";
 import Loader from "@/components/Loader";
 import { handleSubmit, updateProduct } from "@/services/fetchProductos";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCirclePlus, faFile } from "@fortawesome/free-solid-svg-icons";
 
 export default function ProductosPage() {
   const [modal, setModal] = useState(false);
@@ -70,8 +72,21 @@ export default function ProductosPage() {
   };
 
   return (
-    <div className="grid px-10 gap-5 py-16">
-      <h1 className="text-yellow-400 font-bold text-4xl">Tabla de Productos</h1>
+    <div className="grid justify-center px-10 gap-5">
+      <div className="flex justify-between items-center">
+        <h1 className="text-yellow-400 font-bold text-4xl">Tabla de Productos</h1>
+        {/* Botón para AGREGAR producto */}
+        <button
+          className="text-md bg-green-800 px-5 py-1.5 rounded-md text-white font-semibold hover:text-opacity-40 transition-all"
+          onClick={() => {
+            setSelectedProduct(null);
+            setModal(true);
+          }}
+        >
+          Agregar <FontAwesomeIcon icon={faCirclePlus} />
+        </button>
+      </div>
+
 
       {modal && (
         <ProductsForm
@@ -83,7 +98,7 @@ export default function ProductosPage() {
 
       {loading && <Loader />}
 
-      <div className="container">
+      <div className="container max-w-7xl">
         <Grid
           server={{
             url: "http://localhost:3000/productos",
@@ -104,7 +119,7 @@ export default function ProductosPage() {
                 }),
                 producto.stock,
                 _(
-                  <ActionsTable
+                  <ActionsProducts
                     setModal={setModal}
                     handleDelete={handleDelete}
                     producto={producto}
