@@ -7,7 +7,7 @@ import { useState } from "react";
 import ProductsForm from "@/components/Forms/ProductsForm";
 import ActionsProducts from "@/components/ActionsTable/ActionsProducts";
 import Loader from "@/components/Loader";
-import { handleSubmit, updateProduct } from "@/services/fetchProductos";
+import { handleSubmitProduct, updateProduct } from "@/services/fetchProductos";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCirclePlus, faFile } from "@fortawesome/free-solid-svg-icons";
 
@@ -31,43 +31,40 @@ export default function ProductosPage() {
       if (selectedProduct) {
         await updateProduct(selectedProduct, data);
         alert("Producto actualizado exitosamente");
-      } else {
-        await handleSubmit(e);
-        alert("Producto guardado exitosamente");
-      }
-
-      setTimeout(() => {
         window.location.reload();
-      }, 2000);
+        setLoading(true);
+      } else {
+        await handleSubmitProduct(e);
+        alert("Producto guardado exitosamente");
+        window.location.reload();
+        setLoading(true);
+      }
     } catch (error) {
       alert(error.message);
     }
   };
 
-  const handleDelete = async () => {
-    if (!selectedProduct) return;
-
-    const confirmDelete = window.confirm(
-      `¿Estás seguro de que quieres eliminar el producto?`
+  const handleDelete = async (id) => {
+    const confirmDelete = confirm(
+      "¿Estás seguro de que deseas eliminar este producto?"
     );
-    if (!confirmDelete) return;
+    if (confirmDelete) {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/productos/producto/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
 
-    try {
-      const response = await fetch(
-        `http://localhost:3000/productos/producto/${selectedProduct.id}`,
-        {
-          method: "DELETE",
+        if (!response.ok) {
+          throw new Error("Error al eliminar el producto");
         }
-      );
-      if (response.ok) {
-        alert("Producto eliminado con éxito");
-        window.location.reload();
-      } else {
-        const errorData = await response.json();
-        alert(`Error al eliminar el producto: ${errorData.message}`);
+        alert("Producto eliminado exitosamente");
+        setLoading(true);
+      } catch (error) {
+        alert(error.message);
       }
-    } catch (error) {
-      alert("Error al eliminar el producto: " + error.message);
     }
   };
 
@@ -86,7 +83,6 @@ export default function ProductosPage() {
           Agregar <FontAwesomeIcon icon={faCirclePlus} />
         </button>
       </div>
-
 
       {modal && (
         <ProductsForm

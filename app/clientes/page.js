@@ -12,10 +12,34 @@ import { handleSubmitClients, updateClient } from "@/services/fetchClientes";
 import ActionsClients from "@/components/ActionsTable/ActionsClients";
 
 export default function ClientesPage() {
-
   const [modal, setModal] = useState(false);
   const [loading, setLoading] = useState(true);
   const [selectedClient, setSelectedClient] = useState(null);
+
+  const handleDelete = async (id) => {
+    const confirmDelete = confirm(
+      "¿Estás seguro de que deseas eliminar este cliente?"
+    );
+    if (confirmDelete) {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/clientes/cliente/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Error al eliminar el cliente");
+        }
+
+        alert("Cliente eliminado exitosamente");
+        setLoading(true);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  };
 
   const handleCreateOrUpdate = async (e) => {
     e.preventDefault();
@@ -31,13 +55,14 @@ export default function ClientesPage() {
       if (selectedClient) {
         await updateClient(selectedClient, data);
         alert("Cliente actualizado exitosamente");
-        return <Loader />
+        window.location.reload();
+        setLoading(true);
       } else {
         await handleSubmitClients(e);
         alert("Cliente guardado exitosamente");
-        return <Loader />
+        window.location.reload();
+        setLoading(true);
       }
-
     } catch (error) {
       alert(error.message);
     }
@@ -46,8 +71,9 @@ export default function ClientesPage() {
   return (
     <div className="grid justify-center px-10 gap-5">
       <div className="flex justify-between items-center">
-        <h1 className="text-yellow-400 font-bold text-4xl">Tabla de Clientes</h1>
-        {/* Botón para AGREGAR producto */}
+        <h1 className="text-yellow-400 font-bold text-4xl">
+          Tabla de Clientes
+        </h1>
         <button
           className="text-md bg-green-800 px-5 py-1.5 rounded-md text-white font-semibold hover:text-opacity-40 transition-all"
           onClick={() => {
@@ -69,17 +95,16 @@ export default function ClientesPage() {
 
       {loading && <Loader />}
 
-
       <div className="container max-w-7xl">
         <Grid
           server={{
             url: "http://localhost:3000/clientes",
             handle: async (res) => {
               setLoading(false);
-              if (res.status === 404) return await { data: [] };
+              if (res.status === 404) return { data: [] };
               if (res.ok) return await res.json();
 
-              throw new Error("errir al obtener los datos");
+              throw new Error("Error al obtener los datos");
             },
             then: (data) =>
               data.map((cliente) => [
@@ -89,7 +114,7 @@ export default function ClientesPage() {
                 _(
                   <ActionsClients
                     setModal={setModal}
-                    // handleDelete={handleDelete}
+                    handleDelete={handleDelete}
                     cliente={cliente}
                     setSelectedClient={setSelectedClient}
                   />
