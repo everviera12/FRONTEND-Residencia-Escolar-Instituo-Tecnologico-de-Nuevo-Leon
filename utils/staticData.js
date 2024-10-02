@@ -55,6 +55,12 @@ export const clientFormFields = [
   },
 ];
 
+export const installationFormFields = [
+  {
+
+  },
+];
+
 export const table_columns_instalacion = [
   "Cliente",
   "Producto",
