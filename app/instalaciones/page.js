@@ -74,6 +74,30 @@ export default function InstalacionPage() {
     }
   };
 
+  const handleDelete = async (id) => {
+    const confirmDelete = confirm(
+      "¿Estás seguro de que deseas eliminar esta instalacion?"
+    );
+    if (confirmDelete) {
+      try {
+        const response = await fetch(
+          `http://localhost:3000/instalaciones/instalacion/${id}`,
+          {
+            method: "DELETE",
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error("Error al eliminar el producto");
+        }
+        alert("Producto eliminado exitosamente");
+        setLoading(true);
+      } catch (error) {
+        alert(error.message);
+      }
+    }
+  };
+
   return (
     <div className="grid justify-center px-10">
       <div className="flex justify-between items-center">
@@ -137,6 +161,7 @@ export default function InstalacionPage() {
                 instalacion.estado,
                 _(
                   <ActionsInstallation
+                  handleDelete={handleDelete}
                     instalacion={instalacion}
                     setSelectedInstallation={setSelectedInstallation} 
                     setModal={setModal} 
