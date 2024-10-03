@@ -13,9 +13,9 @@ export const asideMenuLinks = [
     label: "Dashboard",
   },
   {
-    url: "/users",
+    url: "/usuarios",
     icon: faUser,
-    label: "Users",
+    label: "Usuarios",
   },
   {
     url: "/productos",
