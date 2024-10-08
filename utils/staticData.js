@@ -1,6 +1,6 @@
 import {
   faBriefcase,
-  faCube,
+  faClipboardList,
   faCubes,
   faPeopleArrows,
   faUser,
@@ -9,7 +9,7 @@ import {
 export const asideMenuLinks = [
   {
     url: "/dashboard",
-    icon: faCubes,
+    icon: faClipboardList,
     label: "Dashboard",
   },
   {
@@ -19,7 +19,7 @@ export const asideMenuLinks = [
   },
   {
     url: "/productos",
-    icon: faCube,
+    icon: faCubes,
     label: "Productos",
   },
   {
@@ -55,9 +55,22 @@ export const clientFormFields = [
   },
 ];
 
-export const installationFormFields = [
+export const loginFormFields = [
   {
-
+    id: "usuario",
+    label: "Usuario",
+    type: "text",
+    value: "usuario",
+    setValue: "setUsuario",
+    placeholder: "Ingresa tu usuario",
+  },
+  {
+    id: "contraseña",
+    label: "Contraseña",
+    type: "password",
+    value: "contraseña",
+    setValue: "setContraseña",
+    placeholder: "Ingresa tu contraseña",
   },
 ];
 
@@ -72,5 +85,5 @@ export const table_columns_instalacion = [
 ];
 
 export const table_columns_clientes = ["Nombre", "Direccion", "Telefono", "Acciones"];
-
 export const table_columns_productos = ["Nombre", "Descripción", "Precio", "Stock", "Acciones"]
+export const table_columns_usuarios = ["Nombre", "Usuario", "Correo", "Rol", "Estado", "Acciones"]
