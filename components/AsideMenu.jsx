@@ -41,7 +41,7 @@ export default function AsideMenu() {
       </div>
 
       {/* Usuario en la parte inferior */}
-      <div className="grid justify-center gap-10 p-4 bg-gray-800">
+      <div className="grid justify-center gap-5 p-4 bg-gray-800">
         <div className="grid lg:flex justify-center items-center gap-5">
           <img
             className="rounded-full"
