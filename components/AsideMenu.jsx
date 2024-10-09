@@ -57,7 +57,7 @@ export default function AsideMenu() {
   const initials = getInitials(nombre);
 
   return (
-    <div className="xl:rounded-r grid grid-rows-1 lg:grid-rows-[auto,1fr,auto] h-screen w-full sm:w-64 bg-gray-900">
+    <div className="xl:rounded-r grid grid-rows-1 lg:grid-rows-[auto,1fr,auto] h-screen w-full sm:w-72 bg-gray-900">
       {/* Logo y empresa */}
       <div className="hidden xl:flex p-6 items-center space-x-3">
         <Image
