@@ -8,16 +8,23 @@ import { loginFormFields } from "@/utils/staticData";
 import BarLoader from "@/components/BarLoader";
 
 export default function Login() {
-  const router = useRouter(); // Utiliza useRouter para la navegación
+  const router = useRouter();
   const [usuario, setUsuario] = useState("");
   const [contraseña, setContraseña] = useState("");
   const [error, setError] = useState("");
-  const [loading, setLoading] = useState(false); // Estado para manejar el loader
+  const [loading, setLoading] = useState(false);
+
+
+  const setSessionCookie = (value) => {
+    const expires = new Date();
+    expires.setTime(expires.getTime() + 1 * 60 * 60 * 1000);
+    document.cookie = `cookie-sesion=${value}; expires=${expires.toUTCString()}; path=/;`;
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true); // Iniciar el loader
-    setError(""); // Resetear el error al iniciar el proceso
+    setLoading(true);
+    setError("");
 
     try {
       const res = await fetch("http://localhost:3000/login", {
@@ -33,23 +40,41 @@ export default function Login() {
         const errorText = await res.text();
         console.error("Error en la respuesta del servidor:", errorText);
         setError("Error al iniciar sesión: " + errorText);
+        setLoading(false);
         return;
       }
 
       const data = await res.json();
       console.log("Mensaje del backend:", data.message);
       console.log("Cookies actuales:", document.cookie);
+
+      console.log(data.user.nombre);
+      localStorage.setItem(`usuario`, JSON.stringify({
+        nombre: data.user.nombre,
+        usuario: data.user.usuario,
+        email: data.user.email,
+        rol: data.user.rol,
+      }));
+
+
+      // Establecer la cookie de sesión
+      setSessionCookie(data.sessionToken || "defaultToken");
+
       setError("");
-      router.push("/usuarios");
+      router.push("/dashboard");
+
+
     } catch (error) {
       console.error("Error al iniciar sesión:", error);
       setError("Error al iniciar sesión: " + error.message);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <>
-      {loading && <BarLoader />}
+      {loading && <BarLoader />} {/* Mostrar el loader si loading es true */}
 
       <div className="flex items-center justify-center min-h-screen bg-gray-900">
         <div className="bg-white shadow-md rounded-lg p-8 max-w-md w-full">
@@ -61,9 +86,7 @@ export default function Login() {
               height={100}
               className="mx-auto rounded-full"
             />
-            <h2 className="text-2xl font-bold text-center mb-6">
-              Iniciar Sesión
-            </h2>
+            <h2 className="text-2xl font-bold text-center mb-6">Iniciar Sesión</h2>
           </div>
 
           <form onSubmit={handleSubmit}>
@@ -107,7 +130,7 @@ export default function Login() {
             </button>
           </form>
 
-          {error && <p className="text-red-500 mb-4">{error}</p>}
+          {error && <p className="text-red-500 mb-4">{error}</p>} {/* Mostrar errores aquí */}
         </div>
       </div>
     </>
