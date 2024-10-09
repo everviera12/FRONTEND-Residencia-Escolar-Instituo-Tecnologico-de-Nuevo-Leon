@@ -74,6 +74,33 @@ export const loginFormFields = [
   },
 ];
 
+export const usersFormFields = [
+  {
+    db_field: "nombre",
+    label_text: "Nombre",
+    input_type: "text",
+    placeholder: "Ingresa el nombre",
+  },
+  {
+    db_field: "usuario",
+    label_text: "Usuario",
+    input_type: "text",
+    placeholder: "Nombre de usuario",
+  },
+  {
+    db_field: "email",
+    label_text: "Correo",
+    input_type: "email",
+    placeholder: "Correo",
+  },
+  {
+    db_field: "contraseña",
+    label_text: "Contraseña",
+    input_type: "password",
+    placeholder: "Ingresa la contraseña",
+  },
+];
+
 export const table_columns_instalacion = [
   "Cliente",
   "Producto",
@@ -84,6 +111,24 @@ export const table_columns_instalacion = [
   "Acciones",
 ];
 
-export const table_columns_clientes = ["Nombre", "Direccion", "Telefono", "Acciones"];
-export const table_columns_productos = ["Nombre", "Descripción", "Precio", "Stock", "Acciones"]
-export const table_columns_usuarios = ["Nombre", "Usuario", "Correo", "Rol", "Estado", "Acciones"]
+export const table_columns_clientes = [
+  "Nombre",
+  "Direccion",
+  "Telefono",
+  "Acciones",
+];
+export const table_columns_productos = [
+  "Nombre",
+  "Descripción",
+  "Precio",
+  "Stock",
+  "Acciones",
+];
+export const table_columns_usuarios = [
+  "Nombre",
+  "Usuario",
+  "Correo",
+  "Rol",
+  "Estado",
+  "Acciones",
+];
