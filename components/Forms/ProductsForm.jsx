@@ -5,7 +5,7 @@ export default function ProductsForm({
 }) {
   return (
     <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50 z-10" id="modal_animation">
-      <div className="bg-white shadow-lg rounded-lg p-8 space-y-6 max-w-lg w-full">
+      <div className="bg-white shadow-lg rounded-lg p-8 space-y-6 max-w-2xl w-full">
         <form onSubmit={handleSubmit} className="space-y-6 text-black">
           {/* inputs | NOMBRE, PRECIO & STOCK */}
           <div className="grid grid-cols-3 gap-4">

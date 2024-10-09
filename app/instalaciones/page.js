@@ -101,9 +101,7 @@ export default function InstalacionPage() {
   return (
     <div className="grid justify-center px-10">
       <div className="flex justify-between items-center">
-        <h1 className="text-yellow-400 font-bold text-4xl">
-          Lista de Instalaciones
-        </h1>
+        <h1 className="text-yellow-400 font-bold text-4xl">Lista de Instalaciones</h1>
         <button
           className="text-md bg-green-800 px-5 py-1.5 rounded-md text-white font-semibold hover:text-opacity-40 transition-all"
           onClick={() => {
