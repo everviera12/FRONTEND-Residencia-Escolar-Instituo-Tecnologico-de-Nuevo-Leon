@@ -6,10 +6,55 @@ import { faRightFromBracket } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Image from "next/image";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 export default function AsideMenu() {
   const path = usePathname();
+  const router = useRouter();
+  const [nombre, setNombre] = useState("");
+  const [email, setEmail] = useState("");
+
+  useEffect(() => {
+    const usuario = JSON.parse(localStorage.getItem(`usuario`));
+
+    if (usuario) {
+      setNombre(usuario.nombre);
+      setEmail(usuario.email);
+    }
+
+    console.log(usuario);
+  }, []);
+
+  // Función para borrar todas las cookies
+  const clearCookies = () => {
+    const cookies = document.cookie.split(";");
+
+    for (const cookie of cookies) {
+      const eqPos = cookie.indexOf("=");
+      const name = eqPos > -1 ? cookie.substr(0, eqPos) : cookie;
+      document.cookie = name + "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/";
+    }
+  };
+
+  // Manejar el evento de logout
+  const handleLogout = () => {
+    localStorage.clear();
+    clearCookies();
+    router.push("/");
+  };
+
+  // Obtener la primera letra del nombre y del apellido
+  const getInitials = (name) => {
+    const nameParts = name.split(" ");
+    const initials = nameParts
+      .map((part) => part.charAt(0))
+      .join("")
+      .toUpperCase();
+    return initials;
+  };
+
+  const initials = getInitials(nombre);
 
   return (
     <div className="xl:rounded-r grid grid-rows-1 lg:grid-rows-[auto,1fr,auto] h-screen w-full sm:w-64 bg-gray-900">
@@ -43,20 +88,21 @@ export default function AsideMenu() {
       {/* Usuario en la parte inferior */}
       <div className="grid justify-center gap-5 p-4 bg-gray-800">
         <div className="grid lg:flex justify-center items-center gap-5">
-          <img
-            className="rounded-full"
-            src="https://i.ibb.co/L1LQtBm/Ellipse-1.png"
-            alt="avatar"
-            width={50}
-            height={50}
-          />
+          <div className="flex items-center justify-center w-12 h-12 rounded-full bg-gray-600 text-white text-lg font-bold">{initials}</div>
           <div className="flex flex-col items-start">
-            <p className="cursor-pointer text-sm leading-5 text-white">Alexis Enache</p>
-            <p className="cursor-pointer text-xs leading-3 text-gray-300">alexis81@gmail.com</p>
+            <p className="cursor-pointer text-sm leading-5 text-white">
+              {nombre}
+            </p>
+            <p className="cursor-pointer text-xs leading-3 text-gray-300">
+              {email}
+            </p>
           </div>
         </div>
 
-        <div className="flex items-center cursor-pointer text-white">
+        <div
+          className="flex items-center cursor-pointer text-white"
+          onClick={handleLogout}
+        >
           <FontAwesomeIcon icon={faRightFromBracket} className="mr-1" />
           <span className="text-sm">Log Out</span>
         </div>
